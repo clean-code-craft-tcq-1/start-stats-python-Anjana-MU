@@ -30,26 +30,23 @@ class StatsTest(unittest.TestCase):
     self.assertTrue(ledAlert.ledGlows)
     
 class EmailAlert:
-  emailSent = True
+  emailSent = False
 
     
 class LEDAlert:
-  ledGlows = True
+  ledGlows = False
     
 
 class StatsAlerter(EmailAlert,LEDAlert):
-  def __init__(self,maxThreshold, target_function):
+  maxThreshold = None
+  def __init__(self,maxThreshold, p_desti):
     self.maxThreshold = maxThreshold
+    self.p_desti = p_desti
     
-  def checkAndAlert(self, thresholdlist):
-    for value in thresholdlist :
-      if value > self.maxThreshold:
-        EmailAlert.emailSent = True
-        LEDAlert.ledGlows = True
-        break
-      else:
-        EmailAlert.emailSent = False
-        LEDAlert.ledGlows = False 
+  def checkAndAlert(self, p_desti):
+    if max(p_desti) > self.maxThreshold:
+      self.p_desti[0].emailSent=True
+      self.p_desti[1].ledGlows=True
  
 if __name__ == "__main__":
   unittest.main()
